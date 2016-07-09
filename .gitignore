@@ -19,8 +19,9 @@ dump.rdb
 !/log/.keep
 /tmp
 
-# Ignore SimpleCov
+# Ignore SimpleCov and rdoc data
 /coverage
+/doc
 
 # Ignore application configuration
 /config/application.yml
