@@ -27,6 +27,8 @@ gem 'jeweler', '~> 2.1.1'
 gem 'oauth2'
 gem 'basecrm'
 
+#gem 'coveralls', require: false
+
 
 group :production, :uat do
   gem 'activerecord-jdbcpostgresql-adapter', platforms: :jruby

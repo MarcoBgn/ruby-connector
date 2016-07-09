@@ -19,6 +19,9 @@ dump.rdb
 !/log/.keep
 /tmp
 
+# Ignore SimpleCov
+/coverage
+
 # Ignore application configuration
 /config/application.yml
 # Database is copied using a script for Travis CI integration
