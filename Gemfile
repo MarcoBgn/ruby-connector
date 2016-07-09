@@ -27,9 +27,6 @@ gem 'jeweler', '~> 2.1.1'
 gem 'oauth2'
 gem 'basecrm'
 
-#gem 'coveralls', require: false
-
-
 group :production, :uat do
   gem 'activerecord-jdbcpostgresql-adapter', platforms: :jruby
   gem 'pg', platforms: :ruby
@@ -43,6 +40,7 @@ end
 
 group :test do
   gem 'simplecov'
+  gem 'coveralls', require: false
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'shoulda-matchers'

@@ -1,7 +1,10 @@
 require 'simplecov'
 require 'coveralls'
-Coveralls.wear!
-SimpleCov.start
+
+SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+SimpleCov.start do
+  add_filter 'app/config'
+end
 
 ENV['RAILS_ENV'] ||= 'test'
 
