@@ -1,20 +1,26 @@
 require "spec_helper"
 
-describe Entities::SubEntities::PersonMapper do
+describe Entities::SubEntities::OrganizationMapper do
 
-  subject{ Entities::SubEntities::PersonMapper}
+  subject{ Entities::SubEntities::OrganizationMapper}
 
   let(:organization) { create(:organization)}
 
   describe 'normalize' do
     let(:connec_hash) {
       {
-        "first_name" => "John",
-        "title" => "Mr",
+        "name" => "Test Company",
+        "industry" => "ITC",
+        "email" => {
+          "address" => "test@test.com"
+        },
+        "website" => {
+          "url" => "http://test.com"
+        },
         "address_work" => {
           "billing" => {
             "city" => 'London',
-            "postal_code" => "W6 7TN",
+            "line1" => '37 Kinderton Gardens',
             "country" => "United Kingdom"
           }
         }
@@ -23,11 +29,13 @@ describe Entities::SubEntities::PersonMapper do
 
     let(:mapped_connec_hash) {
       { :data => {
-        :title => 'Mr',
-        :first_name => 'John',
+        :name => 'Test Company',
+        :industry => 'ITC',
+        :email => "test@test.com",
+        :website => "http://test.com",
         :address => {
           :city => 'London',
-          :postal_code => 'W6 7TN',
+          :line1 => '37 Kinderton Gardens',
           :country => 'United Kingdom'
           }
         }
@@ -44,10 +52,10 @@ describe Entities::SubEntities::PersonMapper do
       "data"=> {
         "id"=> 134706023,
         "contact_id"=> nil,
-        "first_name"=> "John",
-        "last_name"=> "Smith",
-        "title"=> "Mr",
-        "email"=> 'test@email.com',
+        "name"=> "A Company",
+        "industry"=> "ITC",
+        "email"=> "test@test.com",
+        "website"=> "http://test.com",
         "address" => {
             "city" => "London",
             "postal_code" => "W6 7TN",
@@ -59,12 +67,14 @@ describe Entities::SubEntities::PersonMapper do
 
     let (:mapped_external_hash) {
       {
-        :first_name => "John",
-        :last_name => "Smith",
-        :title => "Mr",
+        :name => "A Company",
+        :industry => "ITC",
         :email => {
-          :address => "test@email.com"
+          :address => "test@test.com"
           },
+        :website => {
+          :url => "http://test.com"
+        },
         :address_work => {
           :billing => {
             :city => 'London',

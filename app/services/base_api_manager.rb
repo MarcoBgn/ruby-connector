@@ -29,6 +29,7 @@ class BaseAPIManager
     response = RestClient::Request.execute method: :post, url: "https://api.getbase.com/v2/#{external_entity_name.downcase.pluralize}",
                                                    payload: body, headers: headers
     Rails.logger.debug {"Creating entity #{external_entity_name}, Response: #{response}"}
+    response
   end
 
   #updates an existing entity with the parameters provided
@@ -44,6 +45,7 @@ class BaseAPIManager
     response = RestClient::Request.execute method: :put, url: "https://api.getbase.com/v2/#{external_entity_name.downcase.pluralize}/#{external_id}",
                                                    payload: body, headers: headers
     Rails.logger.debug {"Creating entity #{external_entity_name}, Response: #{response}"}
+    response
   end
 
   private

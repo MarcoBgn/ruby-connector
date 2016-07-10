@@ -9,7 +9,6 @@ class Maestrano::Connector::Rails::Entity < Maestrano::Connector::Rails::EntityB
       entities = BaseAPIManager.new(@organization).get_entities(entity_name)
     else
       raise 'Cannot perform synchronizations less than a minute apart' unless Time.now - last_synchronization_date > 1.minute
-      #TODO a filter needs to be added to fetch only after a last_synchronization_date
       entity_name = self.class.external_entity_name
       entities = BaseAPIManager.new(@organization).get_entities(entity_name)
     end
@@ -21,11 +20,13 @@ class Maestrano::Connector::Rails::Entity < Maestrano::Connector::Rails::EntityB
 
   def create_external_entity(mapped_connec_entity, external_entity_name)
     Maestrano::Connector::Rails::ConnectorLogger.log('info', @organization, "Sending create #{external_entity_name}: #{mapped_connec_entity} to #{Maestrano::Connector::Rails::External.external_name}")
+    check_external_entity_name_presence(external_entity_name)
     entities = BaseAPIManager.new(@organization).create_entities(mapped_connec_entity, external_entity_name)
   end
 
   def update_external_entity(mapped_connec_entity, external_id, external_entity_name)
     Maestrano::Connector::Rails::ConnectorLogger.log('info', @organization, "Sending update #{external_entity_name} (id=#{external_id}): #{mapped_connec_entity} to #{Maestrano::Connector::Rails::External.external_name}")
+    check_external_entity_name_presence(external_entity_name)
     entities = BaseAPIManager.new(@organization).update_entities(mapped_connec_entity, external_id, external_entity_name)
   end
 
@@ -47,5 +48,10 @@ class Maestrano::Connector::Rails::Entity < Maestrano::Connector::Rails::EntityB
   def self.inactive_from_external_entity_hash?(entity)
     # This method return true if entity is inactive in the external application
     entity['data']['customer_status'] != 'current'
+  end
+
+  private
+  def check_external_entity_name_presence(external_entity_name)
+    external_entity_name = self.class.entity_name if !external_entity_name
   end
 end

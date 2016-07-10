@@ -5,6 +5,7 @@ class Entities::SubEntities::OrganizationMapper
   map from('created_at'), to('data/created_at')
   map from('name'), to('data/name')
   map from('industry'), to('data/industry')
+  map from('email/address'), to('data/email')
 
   map from('address_work/billing/line1'), to('data/address/line1')
   map from('address_work/billing/city'), to('data/address/city')
