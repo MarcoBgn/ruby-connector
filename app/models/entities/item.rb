@@ -14,11 +14,11 @@ class Entities::Item < Maestrano::Connector::Rails::Entity
   end
 
   def self.object_name_from_connec_entity_hash(entity)
-    entity['name']
+    "#{entity['name']}"
   end
 
   def self.object_name_from_external_entity_hash(entity)
-    entity['data']['name']
+    "#{entity['data']['name']}"
   end
 end
 
