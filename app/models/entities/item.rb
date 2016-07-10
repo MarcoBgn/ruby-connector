@@ -25,14 +25,13 @@ end
 class ItemMapper
   extend HashMapper
 
-  map from('id'), to('data/id')
   map from('name'), to('data/name')
   map from('reference'), to('data/sku')
   map from('description'), to('data/description')
 
   map from('status') {|value| value == true ? "ACTIVE" : "INACTIVE"}, to('data/active') {|value| "ACTIVE" ? true : false}
 
-  map from('sale_price/total_amount') {|value| BigDecimal.new(value).to_f}, to("data/prices[0]/amount", &:to_s)
+  map from('sale_price/total_amount') {|value| BigDecimal.new(value).to_f}, to("data/prices[0]/amount", &:to_s), default: 0
   map from('sale_price/currency'), to("data/prices[0]/currency")
 
   map from('purchase_price/total_amount') {|value| BigDecimal.new(value).to_f}, to('data/cost', &:to_s)

@@ -21,7 +21,6 @@ class Entities::SubEntities::Contact < Maestrano::Connector::Rails::SubEntityBas
 
   def self.object_name_from_external_entity_hash(entity)
     if entity['data']['is_organization']
-      "NAME FROM EXTERNAL ________********* #{entity['data']['name']}"
       "#{entity['data']['name']}"
     else
       "#{entity['data']['first_name']} #{entity['data']['last_name']}"

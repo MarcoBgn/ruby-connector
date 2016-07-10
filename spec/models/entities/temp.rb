@@ -1,15 +1,4 @@
-require 'spec_helper'
 
-describe Entities::Person do
-
-describe 'class methods' do
-  subject { Entities::Person }
-
-  it { expect(subject.connec_entity_name).to eql('Person') }
-  it { expect(subject.external_entity_name).to eql('Contact') }
-  it { expect(subject.object_name_from_connec_entity_hash({'first_name' => 'A', 'last_name' => 'contact'})).to eql('A contact') }
-  it { expect(subject.object_name_from_external_entity_hash({"data" => {'first_name' => 'A', 'last_name' => 'contact'}})).to eql('A contact') }
-end
 
 describe 'instance methods' do
   before do
@@ -82,5 +71,4 @@ describe 'instance methods' do
 
     it { expect(subject.map_to_external(connec_hash)).to eql(mapped_connec_hash) }
   end
-end
 end

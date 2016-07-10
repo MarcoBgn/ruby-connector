@@ -1,7 +1,6 @@
 class Entities::SubEntities::OrganizationMapper
   extend HashMapper
 
-  map from('id'), to('data/id')
   map from('updated_at'), to('data/updated_at')
   map from('created_at'), to('data/created_at')
   map from('name'), to('data/name')

@@ -18,7 +18,6 @@ class Entities::SubEntities::Organization < Maestrano::Connector::Rails::SubEnti
   end
 
   def self.object_name_from_connec_entity_hash(entity)
-    "NAME FROM CONNECT _________________****************** #{entity}"
     "#{entity['name']}"
   end
 end
