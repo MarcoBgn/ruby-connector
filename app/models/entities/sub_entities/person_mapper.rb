@@ -1,27 +1,12 @@
-class Entities::Person < Maestrano::Connector::Rails::Entity
-  def self.connec_entity_name
-    'Person'
-  end
-
-  def self.external_entity_name
-    'Contact'
-  end
-
-  def self.mapper_class
-    PersonMapper
-  end
-
-  def self.object_name_from_connec_entity_hash(entity)
-    "#{entity['first_name']} #{entity['last_name']}"
-  end
-
-  def self.object_name_from_external_entity_hash(entity)
-    "#{entity['data']['first_name']} #{entity['data']['last_name']}"
-  end
-end
-
-class PersonMapper
+class Entities::SubEntities::PersonMapper
   extend HashMapper
+
+  before_denormalize do |input, output|
+    p "before_denormalize _________**************** IN -> #{input} OUT -> #{output}"
+    output[:is_person] = true
+
+    input
+  end
 
   map from('id'), to('data/id')
   map from('updated_at'), to('data/updated_at')

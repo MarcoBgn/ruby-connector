@@ -9,3 +9,6 @@ script:
   - bundle exec rake
 before_script:
   - cp config/database.travis.yml config/database.yml
+addons:
+    code_climate:
+        repo_token: d599cf35af86993c4f94d9c2546b90f9dfe58c70dc436078860c592231eca690

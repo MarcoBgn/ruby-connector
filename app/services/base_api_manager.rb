@@ -15,6 +15,7 @@ class BaseAPIManager
   response = RestClient::Request.execute method: :get, url: "https://api.getbase.com/v2/#{entity_name.downcase.pluralize}", headers: headers
   JSON.parse(response)['items']
   end
+
   #creates an entity with the parameters passed
   def create_entities(mapped_connec_entity, external_entity_name)
     headers = {
@@ -25,10 +26,12 @@ class BaseAPIManager
 
     body = mapped_connec_entity
 
-    RestClient::Request.execute method: :post, url: "https://api.getbase.com/v2/#{external_entity_name.downcase.pluralize}",
+    response = RestClient::Request.execute method: :post, url: "https://api.getbase.com/v2/#{external_entity_name.downcase.pluralize}",
                                                    payload: body, headers: headers
+    Rails.logger.debug {"Creating entity #{external_entity_name}, Response: #{response}"}
   end
-  #updates an existing entity with the parameters providedß
+
+  #updates an existing entity with the parameters provided
   def update_entities(mapped_connec_entity, external_id, external_entity_name)
     headers = {
       "Accept" => "application/json",
@@ -38,8 +41,9 @@ class BaseAPIManager
 
     body = mapped_connec_entity
 
-    RestClient::Request.execute method: :put, url: "https://api.getbase.com/v2/#{external_entity_name.downcase.pluralize}/#{external_id}",
+    response = RestClient::Request.execute method: :put, url: "https://api.getbase.com/v2/#{external_entity_name.downcase.pluralize}/#{external_id}",
                                                    payload: body, headers: headers
+    Rails.logger.debug {"Creating entity #{external_entity_name}, Response: #{response}"}
   end
 
   private
