@@ -42,7 +42,7 @@ class Entities::Opportunity < Maestrano::Connector::Rails::Entity
     stage = @stages.find { |stage| stage['name'].downcase == entity['sales_stage'].downcase}
     #If no stage is found with the same name, the one with the closest match
     #between 'likelyhood' (Base) and 'probability' (Connec!) will be selected.
-    stage ||= @stages.min_by { |stage| (stage['likelihood'] - entity['probability']).abs }
+    stage ||= @stages.min_by { |stage| (stage['likelihood'].to_i - entity['probability'].to_i).abs }
     mapped_entity[:stage_id] = stage ? stage['id'] : @stages.first['id']
     mapped_entity
   end
@@ -67,5 +67,5 @@ class OpportunityMapper
   map from('expected_close_date'), to('estimated_close_date')
   map from('sales_stage_changes[0]/created_at'), to('last_stage_change_at')
 
-  map from('lead_id'), to('contact_id')
+  map from('lead_id'), to('contact_id'), default: 000
 end
