@@ -7,13 +7,17 @@ class Entities::SubEntities::Person < Maestrano::Connector::Rails::SubEntityBase
     'Person'
   end
 
-  # def self.references
-  #   {'person' => %w(organization_id)}
-  # end
-
   def self.mapper_classes
     {
-      'Contact' => Entities::SubEntities::PersonMapper
+      'Contact' => Entities::SubEntities::PersonMapper,
+      'Lead' => Entities::SubEntities::PersonMapper
+    }
+  end
+
+  def self.references
+    {
+      'Contact' => %w(organization_id assignee_id),
+      'Lead' => %w(assignee_id)
     }
   end
 

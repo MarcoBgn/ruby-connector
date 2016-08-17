@@ -8,6 +8,13 @@ class Organization < Maestrano::Connector::Rails::Organization
     self.oauth_provider = nil
     self.save
   end
+
+  def update_omniauth(token)
+    self.from_omniauth(token)
+    company = Maestrano::Connector::Rails::External.fetch_company(self)
+    self.update(oauth_uid: company['id'])
+    self.save
+  end
   # --------------------------------------------
   #             Overloaded methods
   # --------------------------------------------

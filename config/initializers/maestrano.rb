@@ -30,6 +30,12 @@
 
     config.sso.x509_certificate = Settings[tenant][:x509_certificate]
     config.sso.x509_fingerprint = Settings[tenant][:x509_fingerprint]
+
+    # => Synchronizations endpoints
+    config.app.synchronization_status_path = "/maestrano/#{tenant}/synchronizations/:cld-uid"
+    config.app.synchronization_toggle_path = "/maestrano/#{tenant}/synchronizations/toggle_sync"
+    config.app.synchronization_start_path = "/maestrano/#{tenant}/synchronizations"
+    
     # ==> Single Sign-On activation
     # Enable/Disable single sign-on. When troubleshooting authentication issues
     # you might want to disable SSO temporarily
@@ -137,14 +143,14 @@
     # notified upon creation/update in Connec!™
     config.webhook.connec.subscriptions = {
       accounts: false,
-      company: false,
+      company: true,
       employees: false,
       events: false,
       event_orders: false,
       invoices: false,
-      items: false,
+      items: true,
       journals: false,
-      opportunities: false,
+      opportunities: true,
       organizations: true,
       payments: false,
       pay_items: false,

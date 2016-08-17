@@ -5,8 +5,11 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 #Ignore OSX config files
-.DS_Store
- 
+/.DS_Store
+/**/.DS_Store
+/**/**/.DS_Store
+/**/**/**/.DS_Store
+
 # Ignore bundler config.
 /.bundle
 
@@ -30,5 +33,3 @@ dump.rdb
 
 # Ignore application configuration
 /config/application.yml
-# Database is copied using a script for Travis CI integration
-/config/database.yml

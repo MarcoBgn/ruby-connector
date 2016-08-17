@@ -1,11 +1,11 @@
-class Entities::SubEntities::Contact < Maestrano::Connector::Rails::SubEntityBase
+class Entities::SubEntities::Lead < Maestrano::Connector::Rails::SubEntityBase
 
   def self.external?
     true
   end
 
   def self.entity_name
-    'Contact'
+    'Lead'
   end
 
   def self.mapper_classes
@@ -17,15 +17,16 @@ class Entities::SubEntities::Contact < Maestrano::Connector::Rails::SubEntityBas
 
   def self.references
     {
-      'Person' => %w(organization_id assignee_id)
+      'Person' => %w(organization_id assignee_id),
+      'Organization' => %w(assignee_id)
     }
   end
 
   def self.object_name_from_external_entity_hash(entity)
-    if entity['is_organization']
-      entity['name']
-    else
+    if entity['last_name']
       "#{entity['first_name']} #{entity['last_name']}"
+    else
+      entity['organization_name']
     end
   end
 end

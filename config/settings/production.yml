@@ -1,9 +1,1 @@
-app_host: 'https://base-crm-connector.herokuapp.com/'
-
-default:
-  api_host: 'https://maestrano.com'
-  connec_host: 'https://api-connec.maestrano.com'
-
-maestrano-uat:
-  api_host: 'https://uat.maestrano.io'
-  connec_host: 'https://api-connec-uat.maestrano.io'
+app_host: 'https://connector-basecrm.herokuapp.com'

@@ -1,2 +1,5 @@
 connec_api_id: ''
 connec_api_key: ''
+
+base_client_id: 'your Base client ID'
+base_client_secret: 'your Base client secret'

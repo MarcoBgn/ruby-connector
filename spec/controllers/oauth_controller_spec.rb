@@ -29,12 +29,11 @@ describe OauthController, :type => :controller do
 
   describe 'create_omniauth' do
     let(:user) { Maestrano::Connector::Rails::User.new(email: 'test@email.com', tenant: 'default') }
-    let(:org_manager) { double(OrganizationManager)}
     before {
       allow_any_instance_of(Maestrano::Connector::Rails::SessionHelper).to receive(:current_user).and_return(user)
     }
     let(:uid) { 'uid-123' }
-    subject { get :create_omniauth, provider: 'basecrm', state: uid, code: "test123" }
+    subject { get :create_omniauth, provider: 'basecrm', state: uid }
     let(:callback) { post :create_omniauth, provider: 'basecrm', state: uid, code: "test123"}
 
     context 'when no organization exists' do
@@ -53,6 +52,9 @@ describe OauthController, :type => :controller do
 
     context 'when organization is found' do
       let!(:organization) { create(:organization, tenant: 'default', uid: uid) }
+      let(:token) { OpenStruct.new(token: "123", refresh_token: "456")}
+      let!(:company) { OpenStruct.new(id: "id12345")}
+      let(:client) { double(BaseCRM::Client)}
 
       context 'when not admin' do
         before {
@@ -68,13 +70,16 @@ describe OauthController, :type => :controller do
       context 'when admin' do
         before {
           allow_any_instance_of(Maestrano::Connector::Rails::SessionHelper).to receive(:is_admin?).and_return(true)
-          allow_any_instance_of(OAuth2::Strategy::AuthCode).to receive(:get_token) { "Test"}
-          allow(OrganizationManager).to receive(:update) { "Test"}
+          allow_any_instance_of(OAuth2::Strategy::AuthCode).to receive(:get_token) { token}
+          expect_any_instance_of(Organization).to receive(:update_omniauth) { organization.oauth_uid = "test-uid"}
+          allow(BaseCRM::Client).to receive(:new).with(access_token: "123") { client}
+          allow(client).to receive(:accounts) { client}
+          allow(client).to receive(:self)
         }
 
         it 'updates the organization with data from oauth and api calls' do
           callback
-          expect(OrganizationManager.update).to eq "Test"
+          expect(organization.oauth_uid).to eq "test-uid"
         end
       end
     end

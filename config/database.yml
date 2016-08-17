@@ -1,0 +1,22 @@
+default: &default
+  adapter: sqlite3
+
+development:
+  <<: *default
+  database: db/development.sqlite3
+
+test:
+  <<: *default
+  database: db/test.sqlite3
+
+production:
+  adapter: postgresql
+  url: <%=  ENV['DATABASE_URL'] %>
+  encoding: unicode
+  pool: 5
+
+uat:
+  adapter: postgresql
+  url: <%=  ENV['DATABASE_URL'] %>
+  encoding: unicode
+  pool: 5

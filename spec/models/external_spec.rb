@@ -18,11 +18,10 @@ describe Maestrano::Connector::Rails::External do
 
     describe 'self.fetch_company' do
       before do
-        allow(BaseCRM::Client).to receive(:new) { "BaseCRM client"}
         #This is used to stub a Service used by BaseCRM::Client to query their API
-        allow_any_instance_of(String).to receive(:accounts) { "test"}
-        allow_any_instance_of(String).to receive(:self) { "account information from API"}
+        allow_any_instance_of(BaseAPIManager).to receive(:get_account) { "account information from API"}
       end
+
       it "Retrieves the information about the current organization" do
         expect(subject.fetch_company(organization)).to eq "account information from API"
       end
@@ -30,7 +29,7 @@ describe Maestrano::Connector::Rails::External do
 
     describe 'self.get_client' do
       it 'creates a restforce client' do
-        expect(BaseCRM::Client).to receive(:new)
+        expect(BaseAPIManager).to receive(:new)
         subject.get_client(organization)
       end
     end

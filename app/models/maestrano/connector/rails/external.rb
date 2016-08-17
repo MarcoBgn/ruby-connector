@@ -6,15 +6,18 @@ class Maestrano::Connector::Rails::External
   end
 
   def self.get_client(organization)
-    BaseCRM::Client.new access_token: organization.oauth_token
+    BaseAPIManager.new(organization)
+  end
+
+  def self.create_account_link(organization = nil)
+    'https://getbase.com/base/'
   end
 
   def self.entities_list
-    %w(person_and_organization item)
+    %w(app_user person_and_organization item opportunity)
   end
 
   def self.fetch_company(organization)
-    client = BaseCRM::Client.new access_token: organization.oauth_token
-    response = client.accounts.self
+    BaseAPIManager.new(organization).get_account
   end
 end
