@@ -20,7 +20,7 @@ class Entities::Opportunity < Maestrano::Connector::Rails::Entity
   end
 
   def self.references
-    %w(lead_id)
+    %w(assignee_id lead_id)
   end
 
   def before_sync(last_synchronization_date = nil)
@@ -33,13 +33,18 @@ class Entities::Opportunity < Maestrano::Connector::Rails::Entity
     #Stages in Base are retrieved through a specific endpoint in the API.
     stage = @stages.find { |stage| stage['id'] == entity['stage_id'] }
     map_sales_stage(mapped_entity, stage) if stage
+    mapped_entity
   end
 
   def map_to_external(entity)
     mapped_entity = super
     #The sales_stages in Base are associated with a unique id. The first step in order
     #to map it to Connec! is to try matching the sales_stage directly.
-    stage = @stages.find { |stage| stage['name'].downcase == entity['sales_stage'].downcase}
+    stage = @stages.find do |stage|
+      if stage['name'] && stage['sales_stage']
+        stage['name'].downcase == entity['sales_stage'].downcase
+      end
+    end
     #If no stage is found with the same name, the one with the closest match
     #between 'likelyhood' (Base) and 'probability' (Connec!) will be selected.
     stage ||= @stages.min_by { |stage| (stage['likelihood'].to_i - entity['probability'].to_i).abs }
@@ -59,6 +64,11 @@ end
 class OpportunityMapper
   extend HashMapper
 
+  after_denormalize do |input, output|
+    output[:assignee_type] = "AppUser"
+    output
+  end
+
   #map from Connec! to Base
   map from('name'), to('name')
   map from('amount/total_amount', &:to_f), to('value') { |value| value.is_a?(Integer) ? value : value.to_s }
@@ -67,5 +77,6 @@ class OpportunityMapper
   map from('expected_close_date'), to('estimated_close_date')
   map from('sales_stage_changes[0]/created_at'), to('last_stage_change_at')
 
-  map from('lead_id'), to('contact_id'), default: 000
+  map from('lead_id'), to('contact_id') { |value| value[0]['id'].to_i}
+  map from('assignee_id'), to('owner_id')
 end

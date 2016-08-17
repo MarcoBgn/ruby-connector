@@ -6,7 +6,7 @@ class Entities::SubEntities::PersonMapper
       output[:is_lead] = true
       output[:is_customer] = false
     end
-    output[:assignee_type] = "AppUser"
+    output[:assignee_type] = "AppUser" if output[:assignee_id]
     output
   end
 

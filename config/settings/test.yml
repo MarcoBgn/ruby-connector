@@ -1,4 +1,4 @@
-app_host: 'http://localhost:3001/'
+app_host: 'https://36d5626e.ngrok.io'
 
 encryption_key1: 'This is a key that is 256 bits!!'
 encryption_key2: 'This is a key that is 256 bits!!'

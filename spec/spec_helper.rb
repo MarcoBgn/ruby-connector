@@ -8,6 +8,7 @@ ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'pry-rails'
 require 'factory_girl_rails'
 require 'shoulda/matchers'
 require 'support/helpers/api_manager_helper'

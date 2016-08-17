@@ -1,4 +1,4 @@
-ruby "2.2.3", :engine => "jruby", :engine_version => "9.0.5.0"
+ruby "2.2.4"
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.4'
@@ -14,7 +14,9 @@ gem 'config'
 gem 'rdoc', '~> 3.12'
 gem 'jeweler', '~> 2.1.1'
 
-gem 'maestrano-connector-rails'
+gem 'pry-rails'
+
+gem 'maestrano-connector-rails', path: '~/Desktop/maestrano-projects/maestrano-connector-rails'
 
 gem 'oauth2'
 gem 'basecrm'

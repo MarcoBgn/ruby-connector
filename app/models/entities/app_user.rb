@@ -27,6 +27,10 @@ class Entities::AppUser < Maestrano::Connector::Rails::Entity
   def self.can_write_external?
     false
   end
+
+  def self.references
+    %w(assignee_id)
+  end
 end
 
 class AppUserMapper
